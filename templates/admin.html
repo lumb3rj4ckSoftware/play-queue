@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SteinHQ Play Queue Admin</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="admin-body">
+  <main class="admin-shell">
+    <header class="admin-header">
+      <div>
+        <p class="eyebrow">SteinHQ Control Center</p>
+        <h1>Play Queue</h1>
+      </div>
+      <div class="header-actions">
+        <button onclick="showOverlay()">Overlay zeigen</button>
+        <button onclick="hideOverlay()" class="ghost">Overlay verstecken</button>
+        <button onclick="clearQueue()" class="danger">Queue leeren</button>
+        <button onclick="clearDetected()" class="ghost">GSI-Liste leeren</button>
+      </div>
+    </header>
+
+    <div class="status-strip" id="gsiStatus">Warte auf CS2-Daten …</div>
+    <section class="grid">
+      <div class="panel">
+        <h2>Warteschlange</h2>
+        <div id="queueList" class="list"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Aktuell spielend</h2>
+        <div id="playingList" class="list"></div>
+        <button onclick="finishPlaying()" class="wide">Alle aktuell spielenden abschließen</button>
+      </div>
+
+    </section>
+    <section class="panel rotation-panel">
+      <div class="rotation-panel-head">
+        <div>
+          <p class="eyebrow">Live-Auslosung</p>
+          <h2>Schichtwechsel</h2>
+          <p class="muted rotation-intro">Bestimme fair, wer Platz macht. Das Ergebnis wird beim Start sicher auf dem Server gezogen und sofort in die Queue übernommen.</p>
+        </div>
+        <div class="rotation-overlay-url">
+          <span>OBS-Overlay</span>
+          <code>/overlay</code>
+          <small>Die Animation läuft in deiner vorhandenen Overlay-Quelle.</small>
+        </div>
+      </div>
+
+      <div class="rotation-picker-grid">
+        <div class="rotation-picker">
+          <div class="rotation-picker-title">
+            <h3>Auslosbare Spieler</h3>
+            <span id="candidateCount" class="selection-count">0 / 4</span>
+          </div>
+          <p class="muted">Wähle 2 bis 4 aktuell spielende Personen.</p>
+          <div id="drawCandidateList" class="draw-admin-list"></div>
+        </div>
+
+        <div class="rotation-versus" aria-hidden="true">
+          <span>VS</span>
+        </div>
+
+        <div class="rotation-picker">
+          <div class="rotation-picker-title">
+            <h3>Nachrücker</h3>
+            <span id="challengerCount" class="selection-count">0 gewählt</span>
+          </div>
+          <p class="muted">Wähle die Queue-Spieler, die Plätze benötigen.</p>
+          <div id="drawChallengerList" class="draw-admin-list"></div>
+        </div>
+      </div>
+
+      <div class="rotation-actions">
+        <button type="button" class="ghost" onclick="autoSelectDraw()">Passende Spieler wählen</button>
+        <button type="button" id="startDrawButton" class="rotation-start" onclick="startDraw()">Schichtwechsel starten</button>
+        <span id="drawSelectionHint" class="muted"></span>
+      </div>
+
+      <div class="return-panel"><h3>Nachrücker nicht verbunden?</h3><p class="muted">Fehlende Nachrücker auswählen. Für jeden Platz kehrt zufällig jemand von der Bank des letzten Schichtwechsels zurück; der Nachrücker wartet wieder.</p><div id="returnChoices"></div><button id="returnButton" onclick="returnPlayers()">Zufällig zurück in die Lobby</button></div>
+      <div id="drawLastResult" class="draw-last-result"></div>
+    </section>
+
+    <section class="panel proposal-panel"><h2>Automatische Steam-Vorschläge</h2><p class="muted">Diese Zuordnungen gelten vorläufig. Bestätige sie oder lehne sie ab.</p><div id="proposalList"></div></section>
+    <section class="panel">
+        <h2>CS2 erkannte Spieler / Steam-Zuordnung</h2>
+        <p class="muted">Verknüpfte Teamspieler werden im laufenden Match automatisch als spielend erkannt.</p>
+        <p class="muted">Im Auswahlmenü stehen aktive Personen und alle Queue-Nutzer der letzten 12 Stunden. Pro Twitch-Nutzer können mehrere Steam-Konten verknüpft werden.</p>
+        <div class="detected-search"><label for="detectedSearch">Erkannte Spieler suchen</label><input type="search" id="detectedSearch" maxlength="80" placeholder="Steam-/Twitchname oder SteamID · auch ähnliche Namen" autocomplete="off" oninput="filterDetected()"><span id="detectedSearchInfo" class="muted" aria-live="polite"></span></div>
+        <div id="detectedList" class="list"></div>
+</section>
+  </main>
+
+  <script src="/static/name_search.js"></script>
+  <script src="/static/admin.js"></script>
+</body>
+</html>

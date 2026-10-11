@@ -1,0 +1,50 @@
+# Python und lokale Entwicklungsumgebung
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.egg-info/
+build/
+dist/
+
+# Persönliche Laufzeitdaten und Sicherungen
+*.db
+*.db-*
+*.db.*
+*.sqlite
+*.sqlite3
+*.sqlite-*
+*.sqlite3-*
+backups/
+local/
+
+# Lokale KI-Modelle: niemals ins Repository aufnehmen
+model_cache/
+*.safetensors
+*.gguf
+*.pt
+*.pth
+*.bin
+
+# Geheimnisse und lokale Konfiguration
+.env
+.env.*
+!.env.example
+*.local.bat
+
+# Generierte Ausgaben
+*.log
+PRUEFUNG_*.txt
+*.zip
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

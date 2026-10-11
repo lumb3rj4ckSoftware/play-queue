@@ -1,0 +1,2 @@
+# Für Tests mit simulierten KI-Objekten; kein Modelldownload erforderlich.
+Flask==3.0.3
